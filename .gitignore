@@ -25,3 +25,6 @@ data/
 *.pth
 *.ckpt
 *.gguf
+
+# Symlink to the virtual environment on the SSD
+.env
