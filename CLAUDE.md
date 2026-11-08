@@ -29,6 +29,7 @@ The owner's working repo for the [Hugging Face LLM Course](https://huggingface.c
 - `.env` is a symlink to the virtual environment on the fast SSD (`~/.venvs/hf-llm-course`). This repo itself lives on a large HDD (`/media/borja/STORAGE/GithubRepos/hf-llm-course`), so keep the environment and the model cache off this disk.
 - Run things with `.env/bin/python` and install with `.env/bin/pip install …`. Add anything new to `requirements.txt`.
 - Models and datasets download to the Hugging Face cache (`~/.cache/huggingface`, on the SSD). Don't copy weights into the repo.
+- The owner's shell sources ROS 2, which puts ROS workspace packages on `PYTHONPATH`. pip warnings about ROS packages (e.g. `generate-parameter-library-py requires typeguard`) come from that and can be ignored. If a ROS package ever shadows a course dependency, run with `PYTHONPATH= .env/bin/python …`.
 - Notebooks use the `.env` kernel. In a notebook cell, `!pip …` runs a shell command; in the terminal, use `pip` without the `!` (in bash, `!pip` repeats the last `pip` command from history).
 
 ## Public repo rules
