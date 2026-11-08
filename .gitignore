@@ -1,0 +1,27 @@
+# Python virtual environment (created with: python3 -m venv .env)
+.env/
+.venv/
+
+# Secrets — keep tokens out of a public repo
+*.env
+.secrets*
+hf_token*
+
+# Python / Jupyter
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Training outputs, checkpoints and downloaded data (large; rebuild them instead)
+outputs/
+checkpoints/
+runs/
+wandb/
+models/
+data/
+*.safetensors
+*.bin
+*.pt
+*.pth
+*.ckpt
+*.gguf

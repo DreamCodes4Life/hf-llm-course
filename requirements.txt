@@ -1,0 +1,6 @@
+torch
+transformers[sentencepiece]
+datasets
+evaluate
+accelerate
+jupyterlab

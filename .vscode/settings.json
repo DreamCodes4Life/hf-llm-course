@@ -1,0 +1,6 @@
+{
+  "python.defaultInterpreterPath": "${workspaceFolder}/.env/bin/python",
+  "python.envFile": "${workspaceFolder}/.secrets.env",
+  "jupyter.notebookFileRoot": "${workspaceFolder}",
+  "files.exclude": { "**/.ipynb_checkpoints": true, "**/__pycache__": true }
+}
