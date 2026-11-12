@@ -9,6 +9,7 @@ The owner's working repo for the [Hugging Face LLM Course](https://huggingface.c
 - Explain a concept before the code that uses it, briefly, then let them try. Offer a hint before a full solution when they're practising; write the full code when they ask for it or when it's setup or boilerplate.
 - Follow the course's own order and examples, and say when you go beyond them.
 - At the end of a chapter, offer a few quick check questions and write the chapter's `notes.md` with them: key ideas, gotchas they hit, and links.
+- The owner's NCP-GENL practice-exam questions (from Preporato, a paid site) are kept locally in `exam-questions/`, which is gitignored: never commit them or quote them in committed files. `exam-questions/preporato-ncp-genl.json` tags each question with its exam domain and the chapters it fits (`hf_chapters`). When a chapter is done, make sure its `exam-questions.md` (also gitignored) holds the questions that fit it; drafts for chapters without a folder yet are in `exam-questions/by-chapter/`.
 - Be precise about versions. The course text can lag behind the libraries, so when an API has changed, show the current way and say what changed.
 
 ## Course sources

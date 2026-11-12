@@ -28,3 +28,8 @@ data/
 
 # Symlink to the virtual environment on the SSD
 .env
+
+# Practice-exam questions from paid prep sites (e.g. Preporato) — copyrighted, keep them local only
+exam-questions/
+exam-questions*.md
+exam-questions*.json
