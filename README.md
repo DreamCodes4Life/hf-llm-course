@@ -86,6 +86,7 @@ pip install -r requirements.txt
 | `datasets`, `evaluate`, `accelerate` | Loading data, measuring results and training on any hardware; used from Chapter 3 on |
 | `jupyterlab` | The notebook app that replaces Colab. It also installs `ipykernel`, which VS Code uses to run notebooks |
 | `ipywidgets` | Proper progress bars in notebooks |
+| `pillow` | Loads images for the image pipelines (Chapter 1.3) |
 
 ### 5. Log in to Hugging Face
 
@@ -149,7 +150,9 @@ One folder per chapter, numbered like the course:
 ```
 00-setup/                  environment check and a first pipeline
   setup.ipynb
-01-transformer-models/     (added as I go)
+01-transformer-models/     what Transformers can do and how they work
+  1.3-transformers-what-can-they-do.ipynb
+02-using-transformers/     (added as I go)
 ...
 12-build-reasoning-models/
 ```
