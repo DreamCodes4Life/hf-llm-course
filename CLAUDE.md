@@ -21,7 +21,7 @@ The owner's working repo for the [Hugging Face LLM Course](https://huggingface.c
 ## Layout
 
 - One folder per chapter: `00-setup/`, `01-transformer-models/`, `02-using-transformers/`, … `12-build-reasoning-models/`. Inside each are one or more notebooks named after the course sections (e.g. `7.2-token-classification.ipynb`) and a `notes.md`.
-- When a chapter is done, fill in its row of the README's course map (the folder link).
+- The README has a step-by-step section per chapter (`## Chapter N: <title>`, with a `###` heading per course section), so readers can jump to it from GitHub's outline menu. Add or extend the chapter's section as its sections are done, and fill in its row of the course map (the folder link).
 - Large outputs go in `outputs/` inside the chapter folder (gitignored), never next to the notebooks.
 
 ## Environment
@@ -35,6 +35,7 @@ The owner's working repo for the [Hugging Face LLM Course](https://huggingface.c
 
 ## Public repo rules
 
+- Only what helps someone following the course goes in this repo: notebooks, notes, setup and step-by-step instructions. Personal tooling and anything about the owner's other projects stay out of it.
 - This repo is public on GitHub (`DreamCodes4Life/hf-llm-course`). Never commit tokens, API keys or anything from `~/.cache/huggingface`. If a cell prints a secret, clear that output before committing.
 - Clear huge outputs (long training logs, big tensors) before committing; small outputs that show results are fine.
 - Commit after each meaningful step with a short message that says what was learned or built. Push only when the owner asks; the GitHub account is `DreamCodes4Life`.

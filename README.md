@@ -4,17 +4,22 @@ This repo is my working record of the free [Hugging Face LLM Course](https://hug
 
 Everything runs locally in Jupyter on one NVIDIA GPU (RTX 5090, 32 GB) with PyTorch and 🤗 Transformers. The steps below work on any Linux or macOS machine, with or without a GPU.
 
+Each chapter has its own step-by-step section below. On GitHub, the outline button (☰) at the top right of this file lists every section, so you can jump straight to the one you need.
+
 ## Contents
 
-- [Why local Jupyter instead of Colab](#why-local-jupyter-instead-of-colab)
-- [Prerequisites](#prerequisites)
-- [Setup, step by step](#setup-step-by-step)
-- [Check that it works](#check-that-it-works)
-- [Troubleshooting](#troubleshooting)
+- [Chapter 0: Setup](#chapter-0-setup)
+  - [Why local Jupyter instead of Colab](#why-local-jupyter-instead-of-colab) · [Prerequisites](#prerequisites) · [Steps 1–6](#1-get-the-code) · [Check that it works](#check-that-it-works) · [Troubleshooting](#troubleshooting)
+- [Chapter 1: Transformer models](#chapter-1-transformer-models)
+  - [1.1 Introduction](#11-introduction) · [1.2 NLP and LLMs](#12-natural-language-processing-and-large-language-models) · [1.3 Transformers, what can they do?](#13-transformers-what-can-they-do) · [1.4 How do Transformers work?](#14-how-do-transformers-work) · [1.5 How Transformers solve tasks](#15-how-transformers-solve-tasks)
 - [What's inside](#whats-inside)
 - [Course map](#course-map)
 
-## Why local Jupyter instead of Colab
+## Chapter 0: Setup
+
+Course section: [Chapter 0](https://huggingface.co/learn/llm-course/chapter0/1). You install PyTorch, the course libraries and Jupyter once, then check that a first pipeline runs.
+
+### Why local Jupyter instead of Colab
 
 The course suggests [Google Colab](https://colab.research.google.com/): a notebook in the browser with a free GPU for small jobs and nothing to install. That is still the quickest start, and the right choice on Windows, which the course doesn't cover.
 
@@ -27,7 +32,7 @@ This repo runs the same notebooks locally instead:
 | Sessions | Time out; files are lost unless saved to Drive | No limits; notebooks and models stay on your disk |
 | Installing packages | `!pip install …` in every new session | Once, in a virtual environment |
 
-## Prerequisites
+### Prerequisites
 
 - **Linux or macOS.** On Windows, the course recommends Colab.
 - **Python 3.11 or newer.** Transformers 5 and PyTorch 2.15 require it. Check with `python3 --version`.
@@ -36,8 +41,6 @@ This repo runs the same notebooks locally instead:
 - **An NVIDIA GPU (optional).** A CPU is fine for the first chapters.
 - **A free [Hugging Face account](https://huggingface.co/join).** Most of the course relies on it.
 - **A notebook app:** JupyterLab (installed in step 4) and/or [VS Code](https://code.visualstudio.com/) with the Python and Jupyter extensions.
-
-## Setup, step by step
 
 ### 1. Get the code
 
@@ -109,7 +112,7 @@ It opens in your browser at `http://localhost:8888/lab`. Because it was started 
 
 **VS Code:** install the **Python** and **Jupyter** extensions, open the `hf-llm-course` folder, open a notebook, then **Select Kernel → Python Environments → .env**. Choosing the kernel is the notebook's equivalent of activating the environment.
 
-## Check that it works
+### Check that it works
 
 Open [00-setup/setup.ipynb](00-setup/setup.ipynb) and run all the cells. You should see:
 
@@ -130,7 +133,7 @@ Tested in November 2026 with:
 | JupyterLab | 4.6.6 |
 | huggingface_hub | 2.4.0 |
 
-## Troubleshooting
+### Troubleshooting
 
 | Problem | Fix |
 |---|---|
@@ -142,6 +145,60 @@ Tested in November 2026 with:
 | `TqdmWarning: IProgress not found` | Install `ipywidgets` (it is in `requirements.txt`) and restart the kernel |
 
 Never commit a Hugging Face token. `hf auth login` keeps it outside this folder, and `.gitignore` blocks common secret files.
+
+## Chapter 1: Transformer models
+
+Course chapter: [Transformer models](https://huggingface.co/learn/llm-course/chapter1/1). Sections 1.1, 1.2, 1.4 and 1.5 are reading; 1.3 is the hands-on part, with [my notebook](01-transformer-models/1.3-transformers-what-can-they-do.ipynb). The rest of the chapter (1.6 onwards) is added as I go.
+
+### 1.1 Introduction
+
+Read [section 1.1](https://huggingface.co/learn/llm-course/chapter1/1): what the course covers, how its chapters are grouped, who wrote it and the FAQ. Nothing to run.
+
+### 1.2 Natural Language Processing and Large Language Models
+
+Read [section 1.2](https://huggingface.co/learn/llm-course/chapter1/2): what NLP is, the everyday tasks it covers (classifying text, finding names, generating text…), what large language models changed and where they still fail. Nothing to run.
+
+### 1.3 Transformers, what can they do?
+
+Read [section 1.3](https://huggingface.co/learn/llm-course/chapter1/3), then run its examples in [1.3-transformers-what-can-they-do.ipynb](01-transformer-models/1.3-transformers-what-can-they-do.ipynb).
+
+1. Update the environment, since this chapter adds Pillow for the image pipeline:
+
+   ```bash
+   source .env/bin/activate
+   pip install -r requirements.txt
+   ```
+
+2. Open the notebook in JupyterLab or VS Code with the `.env` kernel (see [step 6](#6-open-the-notebooks)).
+3. Run the cells from the top. Each model downloads once to `~/.cache/huggingface/`: about 12 GB for the whole notebook, mostly the chat model and Whisper. On a CPU the last cells are slow but work.
+4. Compare your results with these:
+
+| Pipeline | Default model in Transformers 5 | Result |
+|---|---|---|
+| `sentiment-analysis` | `distilbert/distilbert-base-uncased-finetuned-sst-2-english` | `POSITIVE` 0.96 and `NEGATIVE` 0.999 |
+| `zero-shot-classification` | `facebook/bart-large-mnli` | *education* 0.84, *business* 0.11, *politics* 0.04 |
+| `text-generation` | `HuggingFaceTB/SmolLM3-3B` | different text on every run |
+| `text-generation` with `model="HuggingFaceTB/SmolLM2-360M"` | (chosen) | two continuations of the prompt |
+| `fill-mask` | `distilbert/distilroberta-base` | *mathematical* 0.20, *computational* 0.04 |
+| `ner` with `aggregation_strategy="simple"` | `dbmdz/bert-large-cased-finetuned-conll03-english` | Sylvain (PER), Hugging Face (ORG), Brooklyn (LOC) |
+| `image-classification` | `google/vit-base-patch16-224` (chosen) | *lynx* 0.43 |
+| `automatic-speech-recognition` | `openai/whisper-large-v3` (chosen) | *"I have a dream that one day this nation will rise up…"* |
+
+**What changed in Transformers 5.** The course text was written for an older version:
+
+- `pipeline("question-answering")`, `pipeline("summarization")`, `pipeline("translation")` and `pipeline("text2text-generation")` were removed. The course's code now raises `KeyError: 'The task question-answering has been removed from transformers…'`. The [migration guide](https://github.com/huggingface/transformers/blob/main/MIGRATION_GUIDE_V5.md#pipelines) replaces them with one chat model and the `text-generation` pipeline, prompted for each task. The notebook does this with `Qwen/Qwen3-4B-Instruct-2507` (about 8 GB); any chat model works, and a smaller one needs less memory.
+- With a chat model, question answering *generates* the answer instead of *extracting* it from the context, so the prompt asks it to answer only from the context.
+- The default `text-generation` model is now `HuggingFaceTB/SmolLM3-3B`. The course's own notebook still uses `distilgpt2`; mine follows the course text and uses `SmolLM2-360M`.
+
+**Messages you can ignore.** `UNEXPECTED ... pooler` load reports (fill-mask and NER: the pooler layer isn't used for these tasks), `ViTImageProcessor requires torchvision ... falling back to ViTImageProcessorPil` (the image pipeline works without torchvision), and Whisper's deprecation notes about `forced_decoder_ids` and `generation_config`.
+
+### 1.4 How do Transformers work?
+
+Read [section 1.4](https://huggingface.co/learn/llm-course/chapter1/4): a short history of Transformer models (GPT, BERT, BART, T5…), language models and transfer learning (pretrain once, fine-tune cheaply), the encoder and decoder, attention, and the original Transformer architecture. Nothing to run.
+
+### 1.5 How Transformers solve tasks
+
+Read [section 1.5](https://huggingface.co/learn/llm-course/chapter1/5): how specific models solve the tasks from 1.3. GPT-2 generates text, BERT classifies text and tokens, BART summarizes and translates, Whisper transcribes speech and ViT classifies images. Nothing to run.
 
 ## What's inside
 
@@ -164,7 +221,7 @@ Each chapter folder has the notebook(s) I worked in and a `notes.md` with the ke
 | Ch. | Topic | What it covers | Folder |
 |---|---|---|---|
 | 0 | [Setup](https://huggingface.co/learn/llm-course/chapter0/1) | Python environment, installing Transformers, Jupyter | [00-setup](00-setup/) |
-| 1 | [Transformer models](https://huggingface.co/learn/llm-course/chapter1/1) | What Transformers and LLMs are, architectures, inference, limits | |
+| 1 | [Transformer models](https://huggingface.co/learn/llm-course/chapter1/1) | What Transformers and LLMs are, architectures, inference, limits | [01-transformer-models](01-transformer-models/) (1.1–1.5 so far) |
 | 2 | [Using Transformers](https://huggingface.co/learn/llm-course/chapter2/1) | Pipelines, models, tokenizers, batching | |
 | 3 | [Fine-tuning a pretrained model](https://huggingface.co/learn/llm-course/chapter3/1) | Trainer API, a full training loop, learning curves | |
 | 4 | [Sharing models and tokenizers](https://huggingface.co/learn/llm-course/chapter4/1) | The Hub, model cards | |
